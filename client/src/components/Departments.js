@@ -1,40 +1,46 @@
 import React from "react";
 import axios from "axios";
 import { Link, } from "react-router-dom";
+import styled from "styled-components";
 
 class Departments extends React.Component {
-  state = { departments: [], };
+  state = { departs: [], };
 
   componentDidMount() {
     axios.get("/api/departments")
     .then( res => {
-      this.setState({ departments: res.data, })
+      this.setState({ departs: res.data, })
     })
     .catch( err => {
-      console.log(err.response)
+      debugger
     })
   }
 
   renderDepartments = () => {
-    return this.state.departments.map( p => (
-      <Link to={`/departments/${p.id}`}>
-      <li>{p.name}</li>
+    return this.state.departs.map( d => (
+      <div key={d.id}>
+      <Link to={`/departments/${d.id}`}>
+        <li>{d.name}</li>
       </Link>
+      </div>
     ));
   }
 
   render() {
     return (
       <div>
+        <h1> Departments </h1>
         <Link to="/departments/new">
-          <button>New Department</button>
+          <button> Add New Department</button>
         </Link>
-        <ul>
+        <div>
           {this.renderDepartments() }
-        </ul>
+        </div>
       </div>
     )
   }
 }
 
 export default Departments;
+
+//STYLES 
