@@ -7,6 +7,13 @@ class ItemForm extends React.Component {
     price: "",
   };
 
+  componentDidMount() {
+    const { id, itemId } = this.props.match.params; 
+    if (itemId)
+      axios.get(`/api/departments/${id}/items/$(itemId)`)
+        .then( res => this.setState({ ...res.data }))
+  }
+
   handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
@@ -14,16 +21,22 @@ class ItemForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { id } = this.props.match.params
-    axios.post(`/api/departments/${id}/items`, {...this.state })
-    .then( res => this.props.history.push(`/departments/${id}`))
+    const { match: {params: {id, itemId}}, history: {push}} = this.props
+    if (itemId) {
+      axios.put(`/api/departments/${id}/items/${itemId}`, {...this.state})
+        .then( res => push(`/departments/${id}`))
+    } else {
+      axios.post(`/api/departments/${id}/items`, {...this.state })
+      .then( res => push(`/departments/${id}`))
+    } 
   }
 
   render() {
+    const { id, itemId } = this.props.match.params; 
     const {name, price} = this.state
     return (
       <div>
-        <h1> Add Item To Department </h1>
+        <h1> { itemId ? "Edit Item" : "Add Item"} </h1>
         <form onSubmit={this.handleSubmit}>
           <input 
             name="name"

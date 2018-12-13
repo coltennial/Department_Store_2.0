@@ -1,34 +1,26 @@
 import React from "react";
-import axios from 'axios';
-import ItemForm from "./ItemForm";
+import axios from "axios";
 
 class Item extends React.Component {
-
+  state = {item: {}, reviews: []};
 
   componentDidMount() {
-    let {id} = this.props
-    axios.get(`/api/departments/${id}/items`)
-      .then(res => {
-        this.setState({ 
-          items: res.data 
-        })
-      })
+    const { url } = this.props.match
+    // axios.get(`/api/${this.props.match.id}`)
+    //   .then( res => this.setState({ ...res.data }))
+    axios.get(`/api/${url}`)
+      .then( res => this.setState({ ...res.data }))
   }
 
-    deleteItem = (department_id, id) => {
-    axios.delete(`/api/departments/${department_id}/items/${id}`)
-    .then( res => {
-      const {items} = this.state;
-      this.setState({
-        items: items.filter(item =>
-          item.id !== id)
-      })
-    })
-  }
 
   render() {
+    const { name, price, } = this.state.item;
+
     return( 
-      <ItemForm {...this.props} /> 
+      <div>
+        <h1> {name} </h1>
+        <p> {price} </p>
+      </div>
     )
   }
 };

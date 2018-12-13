@@ -1,17 +1,25 @@
 import React from 'react';
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-const ItemCard = ({ id, name, price, remove}) => (
+const ItemCard = ({ id, name, price, remove, department_id, itemId}) => (
   <Item>
     <div>
       <h2> {name} </h2>
       <p> ${price} </p>
     </div>
 
-    <BttnStyle>
-      <button> Edit </button>
-      <button onClick={() => remove(id)}> Remove </button>
-    </BttnStyle>
+    
+      <BttnStyle>
+        <Link to={`/departments/${department_id}/items/${id}/edit`}>
+          <button> Edit </button>
+        </Link>
+        <button onClick={() => remove(id)}> Remove </button>
+        <Link to={`/departments/${id}/items/${itemId}`}>
+          <button > Review </button>
+        </Link>
+      </BttnStyle>
+    
   </Item>
 )
 
