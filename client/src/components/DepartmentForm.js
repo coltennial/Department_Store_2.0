@@ -15,6 +15,12 @@ class DepartmentForm extends React.Component {
   //       })
   // }
 
+  componentDidMount() {
+    if (this.props.match.params.id)
+      axios.get(`/api/departments/${this.props.match.params.id}`)
+        .then( res => this.setState({ ...res.data }))
+  }
+
   handleChange = (e) => {
     const { target: { name, value, } } = e
     this.setState({ [name]: value, })
@@ -25,6 +31,15 @@ class DepartmentForm extends React.Component {
     axios.post(`/api/departments`, { ...this.state })
       .then( res => this.props.history.push(`/departments/${res.data.id}`))
   }
+
+  // handleSubmit = (e) => { 
+  //   e.preventDefault() 
+  //   if (this.props.edit) {
+  //     axios.put(`api/departments/${this.props.match.params.id}`, {...this.state })
+  //   } else {
+  //     axios.put(`/api/departments`)
+  //   }
+  // }
 
   render() {
     const { name, } = this.state

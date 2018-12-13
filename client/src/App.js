@@ -17,6 +17,7 @@ const App = () => (
       <Route exact path="/about" component={About} />
       <Route exact path="/departments" component={Departments} />
       <Route exact path="/departments/new" component={DepartmentForm} />
+      <Route exact path="/departments/:id/edit" render={ props => <DepartmentForm edit {...props} /> }/>
       <Route exact path="/departments/:id" component={Department} />
       <Route exact path="/departments/:id/items/new" component={ItemForm} />
       <Route component={NoMatch} />

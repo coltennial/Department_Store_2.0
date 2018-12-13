@@ -77,7 +77,7 @@ export default Department
 
 const DepItems = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-direction: row;
   flex-wrap: wrap;
   font-size: 1rem;
