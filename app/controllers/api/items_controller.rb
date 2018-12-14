@@ -1,6 +1,6 @@
 class Api::ItemsController < ApplicationController
-  before_action :set_item, only: [:update, :destroy]
-  before_action :set_department, only: [:index, :create]
+  before_action :set_item, only: [:show, :update, :destroy]
+  before_action :set_department
 
   def index 
     render json: @department.items.all

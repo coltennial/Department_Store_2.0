@@ -33,9 +33,10 @@ class Departments extends React.Component {
         <Link to="/departments/new">
           <button> Add New Department</button>
         </Link>
-        <div>
-          {this.renderDepartments() }
-        </div>
+
+          <DepCont>
+              {this.renderDepartments() }
+          </DepCont>
       </div>
     )
   }
@@ -44,3 +45,13 @@ class Departments extends React.Component {
 export default Departments;
 
 //STYLES 
+
+const DepCont = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-size: 1rem;
+  width: 80%;
+  margin: 10% auto;
+`;

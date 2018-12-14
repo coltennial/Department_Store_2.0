@@ -8,13 +8,12 @@ class Department extends React.Component {
   state = { depart: {}, items: []} 
 
   componentDidMount() {
-    const {id} = this.props.match.params;
-    axios.get(`/api/departments/${id}`)
+    const {department_id} = this.props.match.params;
+    axios.get(`/api/departments/${department_id}`)
       .then( res => this.setState({ depart: res.data, }))
-      axios.get(`/api/departments/${id}/items`)
+      axios.get(`/api/departments/${department_id}/items`)
         .then(res => this.setState({ items: res.data }))
         .catch( err => {
-          debugger
         })
   }
 
@@ -26,7 +25,7 @@ class Department extends React.Component {
 
   removeItem = (id) => {
     const remove = window.confirm("Would You Like to Remove This Item From This Department?");
-    const dId = this.props.match.params.id;
+    const dId = this.props.match.params.department_id;
     if (remove)
       axios.delete(`/api/departments/${dId}/items/${id}`)
         .then( res => {
@@ -34,7 +33,7 @@ class Department extends React.Component {
             if (i.id !== id)
             return i;
           })
-          this.setState({ items})
+          this.setState({ items })
         })
   }
 
@@ -46,21 +45,23 @@ class Department extends React.Component {
   }
 
   render() {
-    const { depart: {id, name, price} } = this.state
+    const { depart: {id, name} } = this.state
     return (
       <div>
+        
+        <h1> {name} </h1>
         <Buttons>
-        <h1>{ name }</h1>
-            <Link to={`/departments/${id}/edit`}>
-                <ButStyle> Edit Department Name </ButStyle>
+            <Link to={`/departments/${id}/edit`} style={{ textDecoration: "none"}}>
+                <ButStyle1> Edit Department Name </ButStyle1>
             </Link>
 
-            <ButStyle onClick={() => this.handleDelete(id)}> Remove Department </ButStyle>
+            <ButStyle2 onClick={() => this.handleDelete(id)}> Remove Department </ButStyle2>
 
-            <Link to={`/departments/${id}/items/new`}>
-              <ButStyle> Add Item To Department </ButStyle>
+            <Link to={`/departments/${id}/items/new`} style={{ textDecoration: "none"}}>
+              <ButStyle3> Add Item To Department </ButStyle3>
             </Link>
           </Buttons>
+
           <DepItems>
             {this.renderItems()}
           </DepItems>
@@ -86,11 +87,62 @@ const DepItems = styled.div`
 `;
 
 const Buttons = styled.div`
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5%;
+  margin-bottom: -5%;
 `;
 
-const ButStyle = styled.button`
+const ButStyle1 = styled.p`
+display: flex;
+align-items: center;
+justify-content: center;
+width: 200px;
+height: 50px;
+background-color: #a2e;
+color: black;
+transition: border 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  
+&:hover {
+  border: 2px outset #555;
+  background-color: #eee;
+  transition: border 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+`;
 
+const ButStyle2 = styled.p`
+display: flex;
+align-items: center;
+justify-content: center;
+width: 200px;
+height: 50px;
+background-color: #d25;
+color: black;
+transition: border 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  
+&:hover {
+  border: 2px outset #555;
+  background-color: #eee;
+  transition: border 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+`;
+
+const ButStyle3 = styled.p`
+display: flex;
+align-items: center;
+justify-content: center;
+width: 200px;
+height: 50px;
+background-color: #0af;
+color: black;
+transition: border 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  
+&:hover {
+  border: 2px outset #555;
+  background-color: #eee;
+  transition: border 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
 `;
 
 const Item = styled.p`

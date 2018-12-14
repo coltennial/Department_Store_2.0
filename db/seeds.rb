@@ -1,20 +1,22 @@
-1.times do |i|
-
-  department_amount = 5
-
-  department_amount.times do 
-    department = Department.create(
-      name: Faker::Commerce.department
+20.times do
+  d = Department.create(
+    name: Faker::Commerce.department,
+  )
+  10.times do
+    i = d.items.create(
+      name: Faker::Commerce.product_name,
+      price: Faker::Commerce.price,
     )
-    end
-    25.times do 
-      Item.create(
-        name: Faker::Commerce.product_name,
-        price: Faker::Commerce.price.to_f,
-        department_id: rand(1..department_amount)
+    10.times do 
+      i.reviews.create(
+        title: Faker::BreakingBad.episode,
+        body: Faker::BackToTheFuture.quote,
+        rating: rand(1..5),
+        author: Faker::BackToTheFuture.character
       )
     end
-
+  end
 end
 
-puts "Data Seeded"
+print `clear`
+puts "Data SEEDED"
